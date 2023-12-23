@@ -1,15 +1,12 @@
 import axios from "axios";
-
-const BASE_URL_1 = "http://localhost:8000/product";
-const BASE_URL_2 = "http://localhost:8000/category";
-const BASE_URL_3 = "http://localhost:8000/cart";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 // add products
 
 const addProduct = (formData, setFormData) => {
   
   return axios
-    .post(`${BASE_URL_1}/post`, formData)
+    .post(`${BASE_URL}/product/post`, formData)
     .then((response) => {
       alert("product added successfully");
       setFormData({
@@ -31,19 +28,19 @@ const addProduct = (formData, setFormData) => {
 // get products
 
 const getData = () => {
-  return axios(`${BASE_URL_1}/`);
+  return axios(`${BASE_URL}/product`);
 };
 
 // get category
 
 const getCategory = () => {
-  return axios(`${BASE_URL_2}/`);
+  return axios(`${BASE_URL}/category`);
 };
 
 //post category
 
 const addCategory = (additionalCategory) => {
-  return axios(`${BASE_URL_2}/post`, {
+  return axios(`${BASE_URL}/category/post`, {
     method: "POST",
     data: { name: additionalCategory },
     headers: { "Content-Type": "application/json" },
@@ -53,20 +50,20 @@ const addCategory = (additionalCategory) => {
 // patchCart
 
 const handleQuantityChange = (id, value) => {
-  return axios(`${BASE_URL_3}/update/${id}`, {
+  return axios(`${BASE_URL}/cart/update/${id}`, {
     method: "PATCH",
     data: { count: value },
   }).then(() => getCart().then((res) => res.data));
 };
 
 const getCart = () => {
-  return axios(`${BASE_URL_3}/`);
+  return axios(`${BASE_URL}/cart`);
 };
 
 // delete cart
 
 const handleDelete = (id) => {
-  return axios(`http://localhost:8000/cart/delete/${id}`, {
+  return axios(`${BASE_URL}/cart/delete/${id}`, {
     method: "DELETE",
   }).then(() => getCart().then((res) => res.data));
 };

@@ -5,7 +5,7 @@ import axios from "axios";
 
 const CardProduct = ({ product }) => {
   const addToCart = () => {
-    axios("http://localhost:8000/cart/post", {
+    axios(`${process.env.REACT_APP_BASE_URL}/cart/post`, {
       method: "POST",
       data: product,
       headers: {
